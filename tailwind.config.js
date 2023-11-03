@@ -38,8 +38,13 @@ module.exports = {
               },
               code: { color: theme('colors.primary.400') },
             },
-            'h1,h2': {
+            h1: {
               fontWeight: '700',
+              letterSpacing: theme('letterSpacing.tight'),
+              color: theme('colors.gray.900'),
+            },
+            h2: {
+              fontWeight: '650',
               letterSpacing: theme('letterSpacing.tight'),
             },
             h3: {
