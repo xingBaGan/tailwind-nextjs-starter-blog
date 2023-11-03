@@ -19,6 +19,7 @@ import rehypeKatex from 'rehype-katex'
 import rehypeCitation from 'rehype-citation'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypePresetMinify from 'rehype-preset-minify'
+import mermaid from 'remark-mermaidjs'
 import siteMetadata from './data/siteMetadata'
 import emoji from 'remark-emoji'
 import type * as unified from 'unified'
@@ -142,6 +143,7 @@ export default makeSource({
       remarkMath,
       remarkImgToJsx,
       emoji as unified.Pluggable,
+      mermaid as unified.Pluggable,
     ],
     rehypePlugins: [
       rehypeSlug,
