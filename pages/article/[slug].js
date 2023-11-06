@@ -47,7 +47,7 @@ const Article = ({ article, categories }) => {
   let author = article.attributes.author.data.attributes
   return (
     <div>
-      <div className="prose-img:rounded-x prose mx-auto max-w-screen-lg bg-white lg:prose-lg lg:prose-neutral lg:px-10">
+      <div className="prose-img:rounded-x prose mx-auto max-w-screen-xl bg-white lg:prose-lg lg:prose-neutral lg:px-10">
         {/* <Seo seo={seo} /> */}
 
         <h1>{article.attributes.title}</h1>

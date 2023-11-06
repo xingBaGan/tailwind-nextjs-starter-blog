@@ -1,0 +1,30 @@
+:root {
+  --track-white-bg: #f7f4ed;
+  --thumb-white-bg: #f2f3f5;
+  --thumb-hover-white-bg: grey;
+}
+.toc-tree summary::marker {
+  display: none;
+  font-size: 1rem;
+}
+
+.toc-tree::-webkit-scrollbar {
+  box-shadow: none;
+  border-radius: 2px;
+  width: 4px;
+}
+
+.toc-tree::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: var(--track-white-bg);
+}
+
+.toc-tree::-webkit-scrollbar-thumb {
+  background-color: var(--thumb-white-bg);
+  outline: none;
+  border-radius: 50px;
+}
+
+.toc-tree::-webkit-scrollbar-thumb:hover {
+  background: var(--thumb-hover-white-bg);
+}
