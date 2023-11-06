@@ -20,6 +20,10 @@ type TreeNode = Heading & {
   parent: TreeNode | null
 }
 
+function deepCopy(target) {
+  return JSON.parse(JSON.stringify(target))
+}
+
 /**
    * 
    * @param list 
@@ -30,6 +34,7 @@ type TreeNode = Heading & {
         { value: 'template', url: '#template', depth: 4 },
    */
 const buildTree = function (list: Heading[]) {
+  const _list = deepCopy(list)
   const baseDepth = 0
   const rootNode: TreeNode = {
     value: '目录',
@@ -40,7 +45,7 @@ const buildTree = function (list: Heading[]) {
   }
   let depth = baseDepth
   let firstNode = rootNode
-  list.forEach((node: TreeNode, index) => {
+  _list.forEach((node: TreeNode, index) => {
     if (node.depth > depth) {
       if (!firstNode.children) {
         firstNode.children = []
@@ -51,7 +56,7 @@ const buildTree = function (list: Heading[]) {
       firstNode.parent!.children.push(node)
       node.parent = firstNode.parent
     } else {
-      const aboveLevelNode = getAboveLevelNode(list[index - 1], node.depth)
+      const aboveLevelNode = getAboveLevelNode(_list[index - 1], node.depth)
       aboveLevelNode.children.push(node)
       node.parent = aboveLevelNode
     }
