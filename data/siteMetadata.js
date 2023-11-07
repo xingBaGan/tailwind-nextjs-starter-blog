@@ -1,9 +1,9 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
+  title: '码农摘记',
   author: 'jacob jiang',
   headerTitle: '码农摘记',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: '社畜码农日常的笔记',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
