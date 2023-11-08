@@ -31,6 +31,10 @@ export async function cloneRepo() {
       console.log('Repository cloned successfully.');
       success = true;
     } catch (error) {
+      if (error.stderr.includes('is not an empty directory.')) {
+        return;
+      }
+    
       console.error('Error cloning repository:', error.stderr, '\nand retrying...');
     }
   }
@@ -46,7 +50,7 @@ export async function renameRepo() {
   // Rename cloned repo to .contentlayer
   setTimeout(() => {
     fs.renameSync(newPath, oldPath);
-  }, 1000);
+  }, 10000);
 }
 
 export async function updateContentLayerFiles() {
