@@ -131,32 +131,36 @@ export const Authors = defineDocumentType(() => ({
   computedFields,
 }))
 
-export default makeSource({
-  contentDirPath: 'data',
-  documentTypes: [Blog, Authors],
-  mdx: {
-    cwd: process.cwd(),
-    remarkPlugins: [
-      remarkExtractFrontmatter,
-      remarkGfm,
-      remarkCodeTitles,
-      remarkMath,
-      remarkImgToJsx,
-      emoji as unified.Pluggable,
-      mermaid as unified.Pluggable,
-    ],
-    rehypePlugins: [
-      rehypeSlug,
-      rehypeAutolinkHeadings,
-      rehypeKatex,
-      [rehypeCitation, { path: path.join(root, 'data') }],
-      [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
-      rehypePresetMinify,
-    ],
-  },
-  onSuccess: async (importData) => {
-    const { allBlogs } = await importData()
-    createTagCount(allBlogs)
-    createSearchIndex(allBlogs)
-  },
-})
+const source = isProduction
+  ? {}
+  : makeSource({
+      contentDirPath: 'data',
+      documentTypes: [Blog, Authors],
+      mdx: {
+        cwd: process.cwd(),
+        remarkPlugins: [
+          remarkExtractFrontmatter,
+          remarkGfm,
+          remarkCodeTitles,
+          remarkMath,
+          remarkImgToJsx,
+          emoji as unified.Pluggable,
+          mermaid as unified.Pluggable,
+        ],
+        rehypePlugins: [
+          rehypeSlug,
+          rehypeAutolinkHeadings,
+          rehypeKatex,
+          [rehypeCitation, { path: path.join(root, 'data') }],
+          [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
+          rehypePresetMinify,
+        ],
+      },
+      onSuccess: async (importData) => {
+        const { allBlogs } = await importData()
+        createTagCount(allBlogs)
+        createSearchIndex(allBlogs)
+      },
+    })
+
+export default source
