@@ -24,6 +24,7 @@ export async function createTagCount() {
     }
   })
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
+  console.log('tags generated...')
 }
 
 export async function createSearchIndex() {
