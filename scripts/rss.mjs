@@ -4,8 +4,9 @@ import GithubSlugger from 'github-slugger'
 import { escape } from 'pliny/utils/htmlEscaper.js'
 import siteMetadata from '../data/siteMetadata.js'
 import tagData from '../app/tag-data.json' assert { type: 'json' }
-import { allBlogs } from '../.contentlayer/generated/index.mjs'
 import { sortPosts } from 'pliny/utils/contentlayer.js'
+import { repo_name } from '../constants/index.mjs'
+const { allBlogs } = await import(`../${repo_name}/generated/index.mjs`);
 
 const generateRssItem = (config, post) => `
   <item>

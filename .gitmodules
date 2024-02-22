@@ -1,0 +1,3 @@
+[submodule "contentlayer_files"]
+	path = contentlayer_files
+	url = https://github.com/xingBaGan/contentlayer_files

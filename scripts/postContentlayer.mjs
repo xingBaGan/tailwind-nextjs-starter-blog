@@ -1,10 +1,10 @@
 import { writeFileSync } from 'fs'
 import GithubSlugger from 'github-slugger'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
-import { allBlogs } from '../.contentlayer/generated/index.mjs'
 import siteMetadata from '../data/siteMetadata.js'
-
 const isProduction = process.env.NODE_ENV === 'production'
+import { repo_name } from '../constants/index.mjs'
+const { allBlogs } = await import(`../${repo_name}/generated/index.mjs`);
 
 /**
  * Count the occurrences of all tags across blog posts and write to json file
