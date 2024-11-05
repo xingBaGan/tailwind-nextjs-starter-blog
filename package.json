@@ -10,7 +10,8 @@
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
     "prepare": "husky install",
-    "sync": "node ./scripts/syncthing.mjs"
+    "sync": "node ./scripts/syncthing.mjs",
+    "content_update": "cross-env NODE_ENV=development next build"
   },
   "dependencies": {
     "@next/bundle-analyzer": "13.5.6",

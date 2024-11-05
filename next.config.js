@@ -54,6 +54,7 @@ const securityHeaders = [
   },
 ]
 const isProduction = process.env.NODE_ENV === 'production'
+console.log('contentlayer', isProduction, process.env.NODE_ENV);
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
