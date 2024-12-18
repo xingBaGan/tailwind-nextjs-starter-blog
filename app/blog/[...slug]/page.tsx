@@ -4,7 +4,7 @@ import 'katex/dist/katex.css'
 import PageTitle from '@/components/PageTitle'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { sortPosts, coreContent, allCoreContent, MDXDocumentDate } from 'pliny/utils/contentlayer'
+import { sortPosts, coreContent, allCoreContent, MDXDocumentDate, MDXDocument } from 'pliny/utils/contentlayer'
 import { allDocuments, allAuthors } from 'contentlayer/generated'
 import type { Authors } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
@@ -100,7 +100,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
 
   const prev = sortedCoreContents[postIndex + 1]
   const next = sortedCoreContents[postIndex - 1]
-  const post = documents.find((p) => p.slug === slug) as MDXDocumentDate
+  const post = documents.find((p) => p.slug === slug) as MDXDocument
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
     const authorResults = allAuthors.find((p) => p.slug === author)
@@ -114,7 +114,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
       name: author.name,
     }
   })
-
+  console.log('post', post)
   const Layout = layouts[post?.layout || defaultLayout]
   return (
     <>
@@ -126,7 +126,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
         {post?.body?.code ? (
           <MDXLayoutRenderer code={post?.body?.code} components={components} toc={post?.toc} />
         ) : (
-          <div>{post?.body?.raw}</div>
+          <div dangerouslySetInnerHTML={{ __html: (post as any).body.html }}></div>
         )}
       </Layout>
     </>
