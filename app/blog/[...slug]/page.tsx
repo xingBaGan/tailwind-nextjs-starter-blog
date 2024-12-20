@@ -4,7 +4,13 @@ import 'katex/dist/katex.css'
 import PageTitle from '@/components/PageTitle'
 import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { sortPosts, coreContent, allCoreContent, MDXDocumentDate, MDXDocument } from 'pliny/utils/contentlayer'
+import {
+  sortPosts,
+  coreContent,
+  allCoreContent,
+  MDXDocumentDate,
+  MDXDocument,
+} from 'pliny/utils/contentlayer'
 import { allDocuments, allAuthors } from 'contentlayer/generated'
 import type { Authors } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
@@ -12,7 +18,7 @@ import PostLayout from '@/layouts/PostLayout'
 import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
-
+import { Post } from 'contentlayer/generated'
 const defaultLayout = 'PostLayout'
 const layouts = {
   PostSimple,
@@ -32,7 +38,7 @@ export async function generateMetadata({
     const authorResults = allAuthors.find((p) => p.slug === author)
     return coreContent(authorResults as Authors)
   })
-  if (!post) {
+  if (!post || post.draft || !post.type) {
     return
   }
 
@@ -63,7 +69,7 @@ export async function generateMetadata({
       modifiedTime: modifiedAt,
       url: './',
       images: ogImages,
-      authors: authors.length > 0 ? authors : [siteMetadata.author],
+      authors: authors.length > 0 ? authors : [siteMetadata?.author],
     },
     twitter: {
       card: 'summary_large_image',
@@ -101,6 +107,9 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
   const prev = sortedCoreContents[postIndex + 1]
   const next = sortedCoreContents[postIndex - 1]
   const post = documents.find((p) => p.slug === slug) as MDXDocument
+  if (!post) {
+    return <div>No post found</div>
+  }
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
     const authorResults = allAuthors.find((p) => p.slug === author)
@@ -114,7 +123,6 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
       name: author.name,
     }
   })
-  console.log('post', post)
   const Layout = layouts[post?.layout || defaultLayout]
   return (
     <>
@@ -126,7 +134,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
         {post?.body?.code ? (
           <MDXLayoutRenderer code={post?.body?.code} components={components} toc={post?.toc} />
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: (post as any).body.html }}></div>
+          <div dangerouslySetInnerHTML={{ __html: (post as unknown as Post).body.html }}></div>
         )}
       </Layout>
     </>
