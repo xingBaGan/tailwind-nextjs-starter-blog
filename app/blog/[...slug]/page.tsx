@@ -33,17 +33,20 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
   const slug = decodeURI(params.slug.join('/'))
   const post = documents.find((p) => p.slug === slug) as MDXDocumentDate
+  if (!post) {
+    return
+  }
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
     const authorResults = allAuthors.find((p) => p.slug === author)
     return coreContent(authorResults as Authors)
   })
-  if (!post || post.draft || !post.type) {
+  if (post.draft || !post.type) {
     return
   }
 
-  const publishedAt = new Date(post.date).toISOString()
-  const modifiedAt = new Date(post.lastmod || post.date).toISOString()
+  const publishedAt = post.date ? new Date(post.date).toISOString() : undefined
+  const modifiedAt = post.lastmod ? new Date(post.lastmod).toISOString() : publishedAt
   const authors = authorDetails.map((author) => author.name)
 
   let imageList = [siteMetadata.socialBanner]
@@ -116,7 +119,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
     return coreContent(authorResults as Authors)
   })
   const mainContent = coreContent(post)
-  const jsonLd = post.structuredData
+  const jsonLd = post.structuredData || {}
   jsonLd['author'] = authorDetails.map((author) => {
     return {
       '@type': 'Person',
