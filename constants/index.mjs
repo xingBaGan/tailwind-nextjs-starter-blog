@@ -1,2 +1,2 @@
-export const repo_name = process.env.CONTENTLAYER_REPO_FILE_NAME || 'contentlayer_files';
+export const repo_name = process.env.CONTENTLAYER_REPO_FILE_NAME || '.contentlayer';
 export const blogBasePath = 'blog'

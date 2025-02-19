@@ -1,19 +1,19 @@
 import { execa } from 'execa'
 import fs from 'fs'
 import path from 'path'
-const contentGitUrl = 'https://github.com/xingBaGan/contentlayer_files'
+const contentGitUrl = 'https://github.com/xingBaGan/.contentlayer'
 export async function cloneRepo() {
   const timeout = 5 * 60 * 1000 // 5 minutes in milliseconds
   const end = Date.now() + timeout
   let success = false
 
   // Check if the repository already exists and delete it if it does
-  const repoPath = path.join(process.cwd(), 'contentlayer_files')
+  const repoPath = path.join(process.cwd(), '.contentlayer')
   try {
-    console.log('removing the existing contentlayer_files')
+    console.log('removing the existing .contentlayer')
     fs.rmdirSync(repoPath, { recursive: true })
   } catch (e) {
-    console.error('remove contentlayer_files failed')
+    console.error('remove .contentlayer failed')
   }
 
   const contentPath = path.join(process.cwd(), '.contentlayer')
@@ -46,7 +46,7 @@ export async function cloneRepo() {
 
 export async function renameRepo() {
   const oldPath = path.join(process.cwd(), '.contentlayer')
-  const newPath = path.join(process.cwd(), 'contentlayer_files')
+  const newPath = path.join(process.cwd(), '.contentlayer')
   // Rename cloned repo to .contentlayer
   setTimeout(() => {
     fs.renameSync(newPath, oldPath)
