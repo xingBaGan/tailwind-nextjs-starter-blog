@@ -22,7 +22,7 @@
       "@/layouts/*": ["layouts/*"],
       "@/css/*": ["css/*"],
       "@/constants/*": ["constants/*"],
-      "contentlayer/generated": ["./contentlayer_files/generated"]
+      "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "plugins": [
       {
